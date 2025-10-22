@@ -16,11 +16,9 @@ return new class extends Migration
             $table->datetime('end');
             $table->timestamps();
 
-            // Foreign key ke users
             $table->foreign('creator_id')->references('id')->on('users')->onDelete('cascade');
         });
 
-        // Pivot table untuk undangan user
         Schema::create('appointment_user', function (Blueprint $table) {
             $table->uuid('appointment_id');
             $table->uuid('user_id');

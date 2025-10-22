@@ -10,7 +10,6 @@ use Carbon\Carbon;
 
 class AppointmentController extends Controller
 {
-    // 🔹 Lihat daftar appointment milik user login
     public function index(Request $request)
     {
         $user = $request->user();
@@ -29,11 +28,9 @@ class AppointmentController extends Controller
             ->map(function ($appointment) use ($user) {
                 $tz = $user->preferred_timezone ?? 'Asia/Jakarta';
 
-                // Parse as UTC (DB) then convert to user's timezone
                 $start = Carbon::parse($appointment->start, 'UTC')->setTimezone($tz);
                 $end   = Carbon::parse($appointment->end, 'UTC')->setTimezone($tz);
 
-                // overwrite fields or return formatted values
                 $appointment->start = $start->format('Y-m-d H:i:s');
                 $appointment->end   = $end->format('Y-m-d H:i:s');
                 
@@ -43,7 +40,6 @@ class AppointmentController extends Controller
         return response()->json($appointments);
     }
 
-    // 🔹 Membuat appointment baru + undang user lain
     public function store(Request $request)
     {
         $user = $request->user();
@@ -56,7 +52,7 @@ class AppointmentController extends Controller
             'title' => 'required|string|max:255',
             'start' => 'required|date',
             'end' => 'required|date|after:start',
-            'users' => 'array', // daftar user_id
+            'users' => 'array',
             'users.*' => 'exists:users,id',
         ]);
 

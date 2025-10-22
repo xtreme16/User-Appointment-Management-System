@@ -9,7 +9,6 @@ use Carbon\Carbon;
 
 class AuthController extends Controller
 {
-    // Register user baru
     public function register(Request $request)
     {
         $validated = $request->validate([
@@ -19,7 +18,6 @@ class AuthController extends Controller
         ]);
 
         $user = User::create($validated);
-        // Session::put('user_id', $user->id);
         $token = $user->createToken('auth_token', ['*'], Carbon::now()->addHour())->plainTextToken;
 
         return response()->json([
@@ -29,7 +27,6 @@ class AuthController extends Controller
         ], 201);
     }
 
-    // Login hanya pakai username
     public function login(Request $request)
     {
         $validated = $request->validate([
@@ -44,7 +41,6 @@ class AuthController extends Controller
 
         $user->tokens()->delete();
 
-        // Session::put('user_id', $user->id);
         $token = $user->createToken('auth_token', ['*'], Carbon::now()->addHour())->plainTextToken;
 
         return response()->json([
@@ -54,10 +50,8 @@ class AuthController extends Controller
         ]);
     }
 
-    // Logout user
     public function logout()
     {
-        // Session::forget('user_id');
         $request->user()->currentAccessToken()->delete();
         return response()->json(['message' => 'Logged out successfully']);
     }

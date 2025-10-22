@@ -218,7 +218,7 @@
                         <div class="participants-box">
                             <h3>Meeting Participants</h3>
                             <div id="users" class="checkbox-list" aria-label="Invite users">
-                                <!-- checkboxes will be injected here by fetchUsers() -->
+                                
                             </div>
                         </div>
                         
@@ -289,7 +289,7 @@
 
             const data = await response.json();
             const tableBody = document.getElementById('appointmentsTable');
-            tableBody.innerHTML = ''; // Clear loading message
+            tableBody.innerHTML = ''; 
 
             if (response.ok) {
                 console.log('Appointments Data:', data);
@@ -321,7 +321,7 @@
 
             const users = await response.json();
             const usersContainer = document.getElementById('users');
-            usersContainer.innerHTML = ''; // Clear existing
+            usersContainer.innerHTML = ''; 
 
             users.forEach(user => {
                 const checkbox = document.createElement('input');
